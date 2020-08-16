@@ -9,7 +9,7 @@
 <body>
     <div id="app">
         <input type="button" value="start" v-on:click="start">
-        <input type="button" value="end" >
+        <input type="button" value="end"  v-on:click="stop">
         <h4>
             {{ msg }}
         </h4>
@@ -20,15 +20,22 @@
             el: '#app',
             data: {
                 msg : 'Hello Vue',
+                intervalId: null,
             },
             methods: {
                 start: function() {
-                    //console.log(10);
-                    setInterval( () => {
+                    
+                    if(this.intervalId != null) return;
+
+                    this.intervalId = setInterval( () => {
                         var sta = this.msg.substring(0, 1);
                         var end = this.msg.substring(1);
                         this.msg = end + sta;
                     }, 400);
+                },
+                stop: function() {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
                 }
             }
         })
