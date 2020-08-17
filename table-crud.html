@@ -26,6 +26,11 @@
                 </label>
 
                 <input type="button" value="add" class="btn btn-primary" v-on:click="add">
+
+                <label>
+                    Search:
+                    <input type="text" class="form-control" v-model="keywords">
+                </label>
             </div>
         </div>
 
@@ -40,10 +45,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in list" :key=item.id>
+                <tr v-for="item in search(keywords)" :key=item.id>
                     <td> {{item.id}} </td>
                     <td> {{item.name}} </td>
-                    <td> {{item.ctime}} </td>
+                    <td> {{item.ctime | dateFormat()}} </td>
                     <td>
                     <a hred="" @click.prevent="del(item.id)">删除</a>
                     </td>
@@ -54,15 +59,29 @@
 
 
     <script>
+        Vue.filter('dateFormat', function(dateStr) {
+            var dt = new Date(dateStr);
+
+            var y = dt.getFullYear();
+            var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+            var d = dt.getDate().toString().padStart(2, '0');
+
+            return y+"-"+m+"-"+d;
+        });
+        
+        
+
         var vm = new Vue({
             el: '#app',
             data: {
                 Id: '',
                 Name: '',
+                keywords: '',
                 list: [
                     {id: 1, name: 'Kevin', ctime: new Date() },
                     {id: 2, name: 'Tom', ctime: new Date() },
                 ]
+
             },
             methods: {
                 add() {
@@ -85,10 +104,20 @@
                         this.list.splice(i, 1);
                         return true;
                     });
+                },
+                search(keywords) {
+                    var newList = [];
+                    this.list.forEach(element => {
+                        if(element.name.indexOf(keywords) != -1) {
+                            newList.push(element);
+                        }
+                    });
+                    return newList;
                 }
             }
 
         });
+
     </script>
 </body>
 
