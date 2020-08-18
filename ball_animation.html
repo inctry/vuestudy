@@ -39,12 +39,11 @@
                     el.style.transform = "translate(0, 0)";
 
                 },
-                enter(el) {
+                enter(el, done) {
                     el.offsetWidth;
                     el.style.transform = "translate(150px, 250px)";
                     el.style.transition = "all 1s ease";
-                    // el.style.transform = "translate(150px, 250px)"
-                    // el.style.transform = "all 2s ease";
+
                     done();
                 },
                 afterEnter(el) {
