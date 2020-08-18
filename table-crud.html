@@ -22,14 +22,14 @@
 
                 <label>
                     Name:
-                    <input type="text" class="form-control" v-model="Name">
+                    <input type="text" class="form-control" v-model="Name" v-on:keyup.enter="add">
                 </label>
 
                 <input type="button" value="add" class="btn btn-primary" v-on:click="add">
 
                 <label>
                     Search:
-                    <input type="text" class="form-control" v-model="keywords">
+                    <input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'">
                 </label>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     <td> {{item.name}} </td>
                     <td> {{item.ctime | dateFormat()}} </td>
                     <td>
-                    <a hred="" @click.prevent="del(item.id)">删除</a>
+                    <a hred="" v-on:click.prevent="del(item.id)">删除</a>
                     </td>
                 </tr>
             </tbody>
@@ -69,8 +69,24 @@
             return y+"-"+m+"-"+d;
         });
         
-        
+        Vue.directive('focus', {
+            bind: function(el) {
+                
+            },
+            inserted: function(el) {
+                el.focus();
+            },
 
+            updated: function() {
+
+            }
+        });
+
+        Vue.directive('color', function(el, binding) {
+                el.style.color = binding.value;
+            }
+        );
+        
         var vm = new Vue({
             el: '#app',
             data: {
@@ -118,6 +134,9 @@
 
         });
 
+        var vm2 = new Vue({
+
+        })
     </script>
 </body>
 
