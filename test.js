@@ -1,7 +1,5 @@
-
-var x = 1;
-function test() {
-    var x = 2;
-   console.log(this.x);
+var obj = {
+    count: 1,
 }
-test();  // 1
+
+console.log(obj.count);
